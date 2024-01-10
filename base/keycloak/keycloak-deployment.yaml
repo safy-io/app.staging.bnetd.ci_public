@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: keycloak-deployment
+  labels:
+    app: keycloak
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: keycloak
+  template:
+    metadata:
+      labels:
+        app: keycloak
+    spec:
+      imagePullSecrets:
+      - name: registry-credentials
+      containers:
+      - name: keycloak
+        image: ghcr.io/safy-io/keycloak:master
+        imagePullPolicy: Always
+        resources:
+          limits:
+            cpu: "1"
+            memory: 2Gi
+          requests:
+            cpu: 100m
+            memory: 1Gi
+        args: 
+        - start
+        - "--optimized"
+        - "--spi-theme-static-max-age=3600"
+        ports:
+        - containerPort: 8080
+          name: http
+        env:
+        - name: KEYCLOAK_ADMIN
+          value: admin
+        - name: KC_DB
+          value: postgres
+        - name: KC_DB_USERNAME
+          value: dbuser
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: http
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: http

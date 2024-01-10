@@ -1,0 +1,29 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: keycloak-postgresql
+spec:
+  instances: 1
+  primaryUpdateStrategy: unsupervised
+  storage:
+    size: 5Gi
+  bootstrap:
+    initdb:
+      database: keycloak
+      owner: dbuser
+  backup:
+    retentionPolicy: 30d
+    barmanObjectStore:
+      destinationPath: s3://app/pg-backup
+      endpointURL: http://keycloak-minio-service:9000
+      s3Credentials:
+        accessKeyId:
+          name: keycloak-vaultsecret
+          key: S3_ACCESS_KEY_ID
+        secretAccessKey:
+          name: keycloak-vaultsecret
+          key: S3_SECRET_ACCESS_KEY
+      wal:
+        compression: gzip
+      data:
+        compression: gzip

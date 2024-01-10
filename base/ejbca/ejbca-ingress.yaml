@@ -1,0 +1,39 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ejbca-ingress
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+    nginx.ingress.kubernetes.io/affinity: "cookie"
+    nginx.ingress.kubernetes.io/session-cookie-name: "route"
+    nginx.ingress.kubernetes.io/session-cookie-hash: "sha1"
+    nginx.ingress.kubernetes.io/session-cookie-expires: "1800"
+    nginx.ingress.kubernetes.io/session-cookie-max-age: "1800"
+    nginx.ingress.kubernetes.io/app-root: /ejbca
+    # To be disabled before the ejbca-ca-secret is created
+    nginx.ingress.kubernetes.io/auth-tls-verify-client: "optional"
+    #nginx.ingress.kubernetes.io/auth-tls-verify-client: "off"
+    # To be fixed with ejbca-ca-secret namespace
+    nginx.ingress.kubernetes.io/auth-tls-secret: "default/ejbca-ca-secret"
+    nginx.ingress.kubernetes.io/auth-tls-pass-certificate-to-upstream: "true"
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      proxy_set_header SSL_CLIENT_CERT $ssl_client_cert;
+spec:
+  tls:
+    - hosts:
+        - ejbca.bpsusine.com
+      secretName: ejbca-cert
+  rules:
+    - host: ejbca.bpsusine.com
+      http:
+        paths:
+          - path: /ejbca
+            pathType: Prefix
+            backend:
+              service:
+                name: ejbca-service
+                port:
+                  name: proxied-https

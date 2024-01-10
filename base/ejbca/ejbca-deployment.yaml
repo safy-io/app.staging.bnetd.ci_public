@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ejbca-deployment
+  labels:
+    app: ejbca
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ejbca
+  template:
+    metadata:
+      labels:
+        app: ejbca
+    spec:
+      imagePullSecrets:
+      - name: registry-credentials
+      containers:
+      - name: ejbca
+        image: ghcr.io/safy-io/ejbca-ce:8.0.0
+        imagePullPolicy: Always
+        
+        resources:
+          limits:
+            cpu: "2"
+            memory: 4Gi
+          requests:
+            cpu: 100m
+            memory: 2Gi
+        
+        ports:
+        - containerPort: 8081
+          name: proxied-http
+        - containerPort: 8082
+          name: proxied-https
+        
+        env:
+        - name: PROXY_HTTP_BIND
+          value: "0.0.0.0"
+        - name: DATABASE_USER
+          value: dbuser
+        
+        startupProbe:
+          httpGet:
+            path: /ejbca/publicweb/healthcheck/ejbcahealth
+            port: proxied-http
+          timeoutSeconds: 5
+          failureThreshold: 20
+        livenessProbe:
+          httpGet:
+            path: /ejbca/publicweb/healthcheck/ejbcahealth
+            port: proxied-http
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /ejbca/publicweb/healthcheck/ejbcahealth
+            port: proxied-http
+          timeoutSeconds: 5
+          failureThreshold: 1

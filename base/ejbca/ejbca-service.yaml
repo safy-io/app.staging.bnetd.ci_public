@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ejbca-service
+  labels:
+    app: ejbca
+spec:
+  type: ClusterIP
+  ports:
+  - name: proxied-https
+    port: 8082
+    targetPort: 8082
+    protocol: TCP
+  selector:
+    app: ejbca

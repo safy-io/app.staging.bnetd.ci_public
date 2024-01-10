@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: /ejbca/ra/cert
+  name: ejbca-management-cert-ingress
+spec:
+  rules:
+    - host: cert.bpsusine.com
+      http:
+        paths:
+          - path: /management-ca.cer
+            pathType: Exact
+            backend:
+              service:
+                name: ejbca-service
+                port:
+                  name: proxied-https

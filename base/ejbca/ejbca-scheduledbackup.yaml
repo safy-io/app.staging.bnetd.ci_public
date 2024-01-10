@@ -1,0 +1,9 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: ScheduledBackup
+metadata:
+  name: ejbca-scheduledbackup
+spec:
+  schedule: "0 0 0 * * *"
+  immediate: true
+  cluster:
+    name: ejbca-postgresql

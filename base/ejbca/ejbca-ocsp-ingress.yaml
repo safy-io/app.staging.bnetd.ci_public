@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ejbca-ocsp-ingress
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: /ejbca/publicweb/status/ocsp
+spec:
+  rules:
+    - host: ocsp-ejbca.bpsusine.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: ejbca-service
+                port:
+                  name: proxied-https

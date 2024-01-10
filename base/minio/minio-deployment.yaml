@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: minio-deployment
+  labels:
+    app: minio
+spec:
+  selector:
+    matchLabels:
+      app: minio
+  template:
+    metadata:
+      labels:
+        app: minio
+    spec:
+      containers:
+        - name: minio
+          image: minio/minio:latest
+          imagePullPolicy: Always
+          env: []
+          command: [ '/bin/bash', '-c', 'mkdir -p /data/app && mkdir -p /data/temp && minio server /data --console-address ":9001"' ]
+          ports:
+            - name: http
+              containerPort: 9000
+              protocol: TCP
+            - name: console
+              containerPort: 9001
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /minio/health/live
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /minio/health/live
+              port: http
+          volumeMounts:
+            - name: data-volume
+              mountPath: /data
+          resources:
+            requests:
+              cpu: 100m
+              memory: 512Mi
+            limits:
+              cpu: "1"
+              memory: 2Gi
+
+      volumes:
+        - name: data-volume
+          persistentVolumeClaim:
+            claimName: minio-pvc
