@@ -14,8 +14,6 @@ spec:
       labels:
         app: ejbca
     spec:
-      imagePullSecrets:
-      - name: registry-credentials
       containers:
       - name: ejbca
         image: ghcr.io/safy-io/ejbca-ce:8.2.0.1
@@ -46,7 +44,7 @@ spec:
             path: /ejbca/publicweb/healthcheck/ejbcahealth
             port: proxied-http
           timeoutSeconds: 5
-          failureThreshold: 20
+          failureThreshold: 30
         livenessProbe:
           httpGet:
             path: /ejbca/publicweb/healthcheck/ejbcahealth

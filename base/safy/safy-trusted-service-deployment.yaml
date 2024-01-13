@@ -13,8 +13,6 @@ spec:
       labels:
         app: safy-trusted-service
     spec:
-      imagePullSecrets:
-      - name: registry-credentials
       containers:
       - name: application
         image: ghcr.io/safy-io/safy/safy-trusted-service:master
