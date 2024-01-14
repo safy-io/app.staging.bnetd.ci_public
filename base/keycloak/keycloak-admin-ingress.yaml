@@ -8,8 +8,6 @@ metadata:
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
     nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
     nginx.ingress.kubernetes.io/app-root: /admin
-    nginx.ingress.kubernetes.io/auth-tls-secret: default/admin-ca-config
-    nginx.ingress.kubernetes.io/auth-tls-verify-client: "on"
 spec:
   tls:
   - hosts:
