@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: ejbca
-        image: ghcr.io/safy-io/ejbca-ce:8.2.0.1
+        image: ghcr.io/safy-io/ejbca-ce:8.0.0
         imagePullPolicy: Always
         
         resources:
