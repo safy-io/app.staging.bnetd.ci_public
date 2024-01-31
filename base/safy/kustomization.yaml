@@ -6,6 +6,7 @@ resources:
   - safy-document-service-ingress.yaml
   - safy-document-service-service.yaml
   - safy-trusted-service-deployment.yaml
+  - safy-trusted-service-global-ingress.yaml
   - safy-trusted-service-ingress.yaml
   - safy-trusted-service-service.yaml
   - safy-postgresql.yaml

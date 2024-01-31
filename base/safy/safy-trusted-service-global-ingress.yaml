@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: safy-trusted-service-global-ingress
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    kubernetes.io/ingress.class: nginx-internal
+spec:
+  rules:
+    - host: safy-global.bpsusine.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: safy-trusted-service-service
+                port:
+                  name: http
+  tls:
+    - hosts:
+        - safy-global.bpsusine.com
+      secretName: safy-trusted-service-global-cert
