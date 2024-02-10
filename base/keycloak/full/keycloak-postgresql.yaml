@@ -9,8 +9,8 @@ spec:
     size: 5Gi
   bootstrap:
     initdb:
-      database: keycloak
-      owner: dbuser
+      database: keycloak_db
+      owner: keycloak_user
   backup:
     retentionPolicy: 30d
     barmanObjectStore:

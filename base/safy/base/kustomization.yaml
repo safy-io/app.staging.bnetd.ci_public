@@ -9,6 +9,4 @@ resources:
   - safy-trusted-service-global-ingress.yaml
   - safy-trusted-service-ingress.yaml
   - safy-trusted-service-service.yaml
-  - safy-postgresql.yaml
-  - safy-scheduledbackup.yaml
   - safy-vaultsecret.yaml

@@ -35,10 +35,20 @@ spec:
         env:
         - name: KEYCLOAK_ADMIN
           value: admin
+        - name: KEYCLOAK_ADMIN_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: keycloak-vaultsecret
+              key: ADMIN_PASSWORD
         - name: KC_DB
-          value: postgres
+          value: keycloak_db
         - name: KC_DB_USERNAME
-          value: dbuser
+          value: keycloak_user
+        - name: KC_DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: keycloak-vaultsecret
+              key: DB_PASSWORD
         livenessProbe:
           httpGet:
             path: /health

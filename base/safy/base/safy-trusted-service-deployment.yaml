@@ -26,12 +26,28 @@ spec:
             cpu: "1"
             memory: 2Gi
 
-        envFrom:
-        - configMapRef:
-            name: safy-trusted-service-config
         env:
+        - name: POSTGRESQL_DATABASE
+          value: safy_db
+        - name: POSTGRESQL_USER
+          value: safy_user
+        - name: POSTGRESQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: safy-vaultsecret
+              key: DB_PASSWORD
         - name: POSTGRESQL_PARAMETERS
           value: ?ssl=true&sslmode=require&preparedStatementCacheQueries=0
+        - name: S3_ACCESS_KEY_ID
+          valueFrom:
+            secretKeyRef:
+              name: safy-vaultsecret
+              key: S3_ACCESS_KEY_ID
+        - name: S3_SECRET_ACCESS_KEY
+          valueFrom:
+            secretKeyRef:
+              name: safy-vaultsecret
+              key: S3_SECRET_ACCESS_KEY
 
         ports:
         - name: http

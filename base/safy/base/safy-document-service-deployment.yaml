@@ -26,12 +26,19 @@ spec:
             cpu: 500m
             memory: 2Gi
 
-        envFrom:
-        - configMapRef:
-            name: safy-document-service-config
         env:
         - name: CLAMAV_ADDRESS
           value: localhost
+        - name: DEFAULT_SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: safy-vaultsecret
+              key: DEFAULT_SECRET_KEY
+        - name: DOCUMENT_SERVICE_LICENSE
+          valueFrom:
+            secretKeyRef:
+              name: safy-vaultsecret
+              key: DOCUMENT_SERVICE_LICENSE
 
         ports:
         - name: http

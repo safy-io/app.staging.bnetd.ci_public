@@ -36,9 +36,31 @@ spec:
         env:
         - name: PROXY_HTTP_BIND
           value: "0.0.0.0"
+        - name: TLS_SETUP_ENABLED
+          value: later
         - name: DATABASE_USER
-          value: dbuser
-        
+          value: ejbca_user
+        - name: DATABASE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: ejbca-vaultsecret
+              key: DB_PASSWORD
+        - name: SMTP_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: ejbca-vaultsecret
+              key: SMTP_USERNAME
+        - name: SMTP_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: ejbca-vaultsecret
+              key: SMTP_PASSWORD
+        - name: PASSWORD_ENCRYPTION_KEY
+          valueFrom:
+            secretKeyRef:
+              name: ejbca-vaultsecret
+              key: PASSWORD_ENCRYPTION_KEY        
+
         startupProbe:
           httpGet:
             path: /ejbca/publicweb/healthcheck/ejbcahealth

@@ -5,7 +5,5 @@ resources:
   - keycloak-admin-ingress.yaml
   - keycloak-deployment.yaml
   - keycloak-ingress.yaml
-  - keycloak-postgresql.yaml
-  - keycloak-scheduledbackup.yaml
   - keycloak-service.yaml
   - keycloak-vaultsecret.yaml

@@ -1,7 +1,7 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: safy-postgresql
+  name: ejbca-postgresql
 spec:
   instances: 1
   primaryUpdateStrategy: unsupervised
@@ -9,27 +9,23 @@ spec:
     size: 5Gi
   bootstrap:
     initdb:
-      database: postgres
-      owner: dbuser
-      postInitSQL:
-      - ALTER DATABASE postgres OWNER TO dbuser;
-      - CREATE EXTENSION IF NOT EXISTS pg_trgm;
-      - SET pg_trgm.word_similarity_threshold = 0.25;
+      database: ejbca_db
+      owner: ejbca_user
   #   recovery:
-  #     source: safy-postgresql
+  #     source: ejbca-postgresql
   #     recoveryTarget:
   #       targetTime: "2023-04-21 15:31:00+00:00"
   # externalClusters:
-  #   - name: safy-postgresql
+  #   - name: ejbca-postgresql
   #     barmanObjectStore:
   #       destinationPath: s3://app/pg-backup
   #       endpointURL: http://ejbca-minio-service:9000
   #       s3Credentials:
   #         accessKeyId:
-  #           name: safy-vaultsecret
+  #           name: ejbca-vaultsecret
   #           key: S3_ACCESS_KEY_ID
   #         secretAccessKey:
-  #           name: safy-vaultsecret
+  #           name: ejbca-vaultsecret
   #           key: S3_SECRET_ACCESS_KEY
   #       wal:
   #         compression: gzip
@@ -39,13 +35,13 @@ spec:
     retentionPolicy: 30d
     barmanObjectStore:
       destinationPath: s3://app/pg-backup
-      endpointURL: http://minio-service:9000
+      endpointURL: http://ejbca-minio-service:9000
       s3Credentials:
         accessKeyId:
-          name: safy-vaultsecret
+          name: ejbca-vaultsecret
           key: S3_ACCESS_KEY_ID
         secretAccessKey:
-          name: safy-vaultsecret
+          name: ejbca-vaultsecret
           key: S3_SECRET_ACCESS_KEY
       wal:
         compression: gzip

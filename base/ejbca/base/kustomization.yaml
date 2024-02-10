@@ -9,9 +9,7 @@ resources:
   - ejbca-management-cert-ingress.yaml
   - ejbca-management-crl-ingress.yaml
   - ejbca-ocsp-ingress.yaml
-  - ejbca-postgresql.yaml
   - ejbca-root-cert-ingress.yaml
   - ejbca-root-crl-ingress.yaml
-  - ejbca-scheduledbackup.yaml
   - ejbca-service.yaml
   - ejbca-vaultsecret.yaml
