@@ -45,6 +45,11 @@ spec:
             secretKeyRef:
               name: ejbca-vaultsecret
               key: DB_PASSWORD
+        - name: PASSWORD_ENCRYPTION_KEY
+          valueFrom:
+            secretKeyRef:
+              name: ejbca-vaultsecret
+              key: PASSWORD_ENCRYPTION_KEY        
         - name: SMTP_USERNAME
           valueFrom:
             secretKeyRef:
@@ -55,11 +60,6 @@ spec:
             secretKeyRef:
               name: ejbca-vaultsecret
               key: SMTP_PASSWORD
-        - name: PASSWORD_ENCRYPTION_KEY
-          valueFrom:
-            secretKeyRef:
-              name: ejbca-vaultsecret
-              key: PASSWORD_ENCRYPTION_KEY        
 
         startupProbe:
           httpGet:

@@ -27,6 +27,21 @@ spec:
             memory: 2Gi
 
         env:
+        - name: CMP_URL
+          valueFrom:
+            secretKeyRef:
+              name: safy-vaultsecret
+              key: CMP_URL
+        - name: CMP_HMAC_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: safy-vaultsecret
+              key: CMP_HMAC_SECRET
+        - name: ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: safy-vaultsecret
+              key: ROOT_PASSWORD
         - name: POSTGRESQL_DATABASE
           value: safy_db
         - name: POSTGRESQL_USER
@@ -48,6 +63,61 @@ spec:
             secretKeyRef:
               name: safy-vaultsecret
               key: S3_SECRET_ACCESS_KEY
+        - name: SMTP_ADDRESS
+          valueFrom:
+            secretKeyRef:
+              name: safy-vaultsecret
+              key: SMTP_ADDRESS
+        - name: SMTP_PORT
+          valueFrom:
+            secretKeyRef:
+              name: safy-vaultsecret
+              key: SMTP_PORT
+        - name: SMTP_USER
+          valueFrom:
+            secretKeyRef:
+              name: safy-vaultsecret
+              key: SMTP_USER
+        - name: SMTP_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: safy-vaultsecret
+              key: SMTP_PASSWORD
+        - name: SMTP_START_TLS
+          valueFrom:
+            secretKeyRef:
+              name: safy-vaultsecret
+              key: SMTP_START_TLS
+        - name: TRUSTED_SERVICE_LICENSE
+          valueFrom:
+            secretKeyRef:
+              name: safy-vaultsecret
+              key: TRUSTED_SERVICE_LICENSE
+        - name: TWILIO_ACCOUNT
+          valueFrom:
+            secretKeyRef:
+              name: safy-vaultsecret
+              key: TWILIO_ACCOUNT
+        - name: TWILIO_API_KEY_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: safy-vaultsecret
+              key: TWILIO_API_KEY_SECRET
+        - name: TWILIO_API_KEY_SID
+          valueFrom:
+            secretKeyRef:
+              name: safy-vaultsecret
+              key: TWILIO_API_KEY_SID
+        - name: TWILIO_SMS_SENDER_PHONE
+          valueFrom:
+            secretKeyRef:
+              name: safy-vaultsecret
+              key: TWILIO_SMS_SENDER_PHONE
+        - name: TWILIO_WHATSAPP_SENDER_PHONE
+          valueFrom:
+            secretKeyRef:
+              name: safy-vaultsecret
+              key: TWILIO_WHATSAPP_SENDER_PHONE
 
         ports:
         - name: http
