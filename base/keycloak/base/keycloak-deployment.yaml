@@ -40,8 +40,6 @@ spec:
             secretKeyRef:
               name: keycloak-vaultsecret
               key: ADMIN_PASSWORD
-        - name: KC_DB
-          value: keycloak_db
         - name: KC_DB_USERNAME
           value: keycloak_user
         - name: KC_DB_PASSWORD
