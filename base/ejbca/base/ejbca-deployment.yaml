@@ -79,3 +79,7 @@ spec:
             port: proxied-http
           timeoutSeconds: 5
           failureThreshold: 1
+      
+        volumeMounts: []
+
+      volumes: []
