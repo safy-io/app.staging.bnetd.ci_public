@@ -139,3 +139,7 @@ spec:
             path: /api/health
             port: http
           failureThreshold: 1
+      
+        volumeMounts: []
+
+      volumes: []
