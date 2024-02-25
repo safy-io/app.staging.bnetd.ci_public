@@ -3,6 +3,5 @@ kind: Kustomization
 
 resources:
   - ../base
-  - ../../minio
-  - safy-postgresql.yaml
-  - safy-scheduledbackup.yaml
+  - keycloak-postgresql.yaml
+  - keycloak-scheduledbackup.yaml
