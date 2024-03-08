@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: application
-        image: ghcr.io/safy-io/safy/safy-document-service:master
+        image: ghcr.io/safy-io/safy/safy-document-service:1.2.2
         imagePullPolicy: Always
 
         resources:
