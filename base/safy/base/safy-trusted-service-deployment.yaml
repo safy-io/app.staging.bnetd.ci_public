@@ -45,7 +45,10 @@ spec:
         - name: POSTGRESQL_DATABASE
           value: safy_db
         - name: POSTGRESQL_USER
-          value: safy_user
+          valueFrom:
+            secretKeyRef:
+              name: safy-vaultsecret
+              key: DB_USER
         - name: POSTGRESQL_PASSWORD
           valueFrom:
             secretKeyRef:

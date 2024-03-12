@@ -39,7 +39,10 @@ spec:
         - name: TLS_SETUP_ENABLED
           value: later
         - name: DATABASE_USER
-          value: ejbca_user
+          valueFrom:
+            secretKeyRef:
+              name: ejbca-vaultsecret
+              key: DB_USER
         - name: DATABASE_PASSWORD
           valueFrom:
             secretKeyRef:
