@@ -43,7 +43,10 @@ spec:
               name: safy-vaultsecret
               key: ROOT_PASSWORD
         - name: POSTGRESQL_DATABASE
-          value: safy_db
+          valueFrom:
+            secretKeyRef:
+              name: safy-vaultsecret
+              key: DB_NAME
         - name: POSTGRESQL_USER
           valueFrom:
             secretKeyRef:
