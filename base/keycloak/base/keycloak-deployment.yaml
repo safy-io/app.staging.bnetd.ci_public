@@ -51,10 +51,14 @@ spec:
               name: keycloak-vaultsecret
               key: DB_PASSWORD
         livenessProbe:
+          failureThreshold: 5
+          initialDelaySeconds: 90
           httpGet:
-            path: /health
+            path: /realms/master
             port: http
         readinessProbe:
+          failureThreshold: 5
+          initialDelaySeconds: 90
           httpGet:
-            path: /health
+            path: /realms/master
             port: http
