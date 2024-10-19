@@ -50,15 +50,17 @@ spec:
             secretKeyRef:
               name: keycloak-vaultsecret
               key: DB_PASSWORD
+        - name: KC_PROXY_HEADERS
+          value: xforwarded
         livenessProbe:
           failureThreshold: 8
-          initialDelaySeconds: 30
+          initialDelaySeconds: 20
           httpGet:
             path: /realms/master
             port: http
         readinessProbe:
           failureThreshold: 8
-          initialDelaySeconds: 30
+          initialDelaySeconds: 20
           httpGet:
             path: /realms/master
             port: http
