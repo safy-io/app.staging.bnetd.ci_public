@@ -54,13 +54,13 @@ spec:
           value: xforwarded
         livenessProbe:
           failureThreshold: 8
-          initialDelaySeconds: 20
+          initialDelaySeconds: 30
           httpGet:
             path: /realms/master
             port: http
         readinessProbe:
           failureThreshold: 8
-          initialDelaySeconds: 20
+          initialDelaySeconds: 30
           httpGet:
             path: /realms/master
             port: http
