@@ -5,6 +5,8 @@ metadata:
   labels:
     app: safy-trusted-service
 spec:
+  replicas: 1
+  revisionHistoryLimit: 0
   selector:
     matchLabels:
       app: safy-trusted-service
