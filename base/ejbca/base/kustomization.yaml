@@ -4,12 +4,8 @@ kind: Kustomization
 resources:
   - ejbca-deployment.yaml
   - ejbca-ingress.yaml
-  - ejbca-legal-person-cert-ingress.yaml
-  - ejbca-legal-person-crl-ingress.yaml
-  - ejbca-management-cert-ingress.yaml
-  - ejbca-management-crl-ingress.yaml
-  - ejbca-natural-person-cert-ingress.yaml
-  - ejbca-natural-person-crl-ingress.yaml
+  - ejbca-intermediate-cert-ingress.yaml
+  - ejbca-intermediate-crl-ingress.yaml
   - ejbca-ocsp-ingress.yaml
   - ejbca-root-cert-ingress.yaml
   - ejbca-root-crl-ingress.yaml
