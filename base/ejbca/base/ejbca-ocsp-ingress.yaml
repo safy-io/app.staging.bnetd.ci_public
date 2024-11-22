@@ -7,7 +7,7 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /ejbca/publicweb/status/ocsp
 spec:
   rules:
-    - host: ocsp-ejbca.bpsusine.com
+    - host: o.pki.bpsusine.com
       http:
         paths:
           - path: /

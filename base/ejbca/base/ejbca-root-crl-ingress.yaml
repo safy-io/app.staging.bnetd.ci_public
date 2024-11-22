@@ -7,7 +7,7 @@ metadata:
   name: ejbca-root-crl-ingress
 spec:
   rules:
-    - host: crl.bpsusine.com
+    - host: c.pki.bpsusine.com
       http:
         paths:
           - path: /safy-root-ca.crl

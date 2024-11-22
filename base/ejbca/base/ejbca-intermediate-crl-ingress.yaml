@@ -4,13 +4,13 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/rewrite-target: /ejbca/publicweb/crls/search.cgi
-  name: ejbca-natural-person-crl-ingress
+  name: ejbca-intermediate-crl-ingress
 spec:
   rules:
-    - host: crl.bpsusine.com
+    - host: c.pki.bpsusine.com
       http:
         paths:
-          - path: /safy-natural-person-ca.crl
+          - path: /safy-intermediate-ca.crl
             pathType: Exact
             backend:
               service:
