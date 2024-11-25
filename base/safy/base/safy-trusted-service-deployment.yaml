@@ -96,11 +96,6 @@ spec:
             secretKeyRef:
               name: safy-vaultsecret
               key: SMTP_START_TLS
-        - name: TRUSTED_SERVICE_LICENSE
-          valueFrom:
-            secretKeyRef:
-              name: safy-vaultsecret
-              key: TRUSTED_SERVICE_LICENSE
         - name: TWILIO_ACCOUNT
           valueFrom:
             secretKeyRef:
