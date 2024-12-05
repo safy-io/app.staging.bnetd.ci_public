@@ -1,0 +1,141 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - ../../base/ejbca/base
+  - ejbca-cmp-ingress.yaml
+
+patches:
+
+  - target:
+      version: v1
+      kind: Ingress
+      name: ejbca-ingress
+    patch: |-
+      - op: replace
+        path: /spec/rules/0/host
+        value: ejbca.staging.bnetd.ci
+      - op: replace
+        path: /spec/tls/0/hosts/0
+        value: ejbca.staging.bnetd.ci
+      - op: replace
+        path: /metadata/annotations/kubernetes.io~1ingress.class
+        value: nginx
+      - op: add
+        path: "/metadata/annotations/nginx.ingress.kubernetes.io~1auth-tls-secret"
+        value: default/ejbca-ca-secret
+
+  - target:
+      version: v1
+      kind: Ingress
+      name: ejbca-ocsp-ingress
+    patch: |-
+      - op: replace
+        path: /spec/rules/0/host
+        value: o.pki.staging.bnetd.ci
+      - op: replace
+        path: /spec/rules/0/http/paths/0/path
+        value: /safy-intermediate-ca-g1
+
+  - target:
+      version: v1
+      kind: Ingress
+      name: ejbca-root-crl-ingress
+    patch: |-
+      - op: replace
+        path: /spec/rules/0/host
+        value: c.pki.staging.bnetd.ci
+      - op: replace
+        path: /spec/rules/0/http/paths/0/path
+        value: /safy-root-ca-g1.crl
+      - op: replace
+        path: /metadata/annotations/nginx.ingress.kubernetes.io~1rewrite-target
+        value: /ejbca/publicweb/crls/search.cgi?iHash=mlReplwl%2BBC0/nktHjUGzv2eZVU
+
+  - target:
+      version: v1
+      kind: Ingress
+      name: ejbca-intermediate-crl-ingress
+    patch: |-
+      - op: replace
+        path: /spec/rules/0/host
+        value: c.pki.staging.bnetd.ci
+      - op: replace
+        path: /spec/rules/0/http/paths/0/path
+        value: /safy-intermediate-ca-g1.crl
+      - op: replace
+        path: /metadata/annotations/nginx.ingress.kubernetes.io~1rewrite-target
+        value: /ejbca/publicweb/crls/search.cgi?iHash=lNZzXGxLv1J4%2BSbHzkfYwViyE1M
+
+  - target:
+      version: v1
+      kind: Ingress
+      name: ejbca-root-cert-ingress
+    patch: |-
+      - op: replace
+        path: /spec/rules/0/host
+        value: i.pki.staging.bnetd.ci
+      - op: replace
+        path: /spec/rules/0/http/paths/0/path
+        value: /safy-root-ca-g1.cer
+      - op: replace
+        path: /metadata/annotations/nginx.ingress.kubernetes.io~1rewrite-target
+        value: /ejbca/publicweb/webdist/certdist?cmd=iecacert&issuer=CN%3DSafy+Root+CA+G1+%28staging%29%2CorganizationIdentifier%3DNTRMA-135645%2CO%3DSAFY.io%2CC%3DMA&level=0
+
+  - target:
+      version: v1
+      kind: Ingress
+      name: ejbca-intermediate-cert-ingress
+    patch: |-
+      - op: replace
+        path: /spec/rules/0/host
+        value: i.pki.staging.bnetd.ci
+      - op: replace
+        path: /spec/rules/0/http/paths/0/path
+        value: /safy-intermediate-ca-g1.cer
+      - op: replace
+        path: /metadata/annotations/nginx.ingress.kubernetes.io~1rewrite-target
+        value: /ejbca/publicweb/webdist/certdist?cmd=iecacert&issuer=CN%3DSafy+Intermediate+CA+G1+%28staging%29%2CorganizationIdentifier%3DNTRMA-135645%2CO%3DSAFY.io%2CC%3DMA&level=0
+
+  - target:
+      version: v1
+      kind: Deployment
+      name: ejbca-deployment
+    patch: |-
+      - op: add
+        path: /spec/template/spec/containers/0/env/0
+        value:
+          name: DATABASE_JDBC_URL
+          value: "jdbc:postgresql://safy-postgres-cluster-1-cluster.cluster-cnue6eikcwxf.eu-west-1.rds.amazonaws.com/ejbca_staging_db"
+      - op: add
+        path: /spec/template/spec/containers/0/env/0
+        value:
+          name: SMTP_DESTINATION
+          value: "smtp.sendgrid.net"
+      - op: add
+        path: /spec/template/spec/containers/0/env/0
+        value:
+          name: SMTP_DESTINATION_PORT
+          value: "587"
+      - op: add
+        path: /spec/template/spec/containers/0/env/0
+        value:
+          name: SMTP_SSL_ENABLED
+          value: "false"
+      - op: add
+        path: /spec/template/spec/containers/0/env/0
+        value:
+          name: SMTP_FROM
+          value: "ejbca-staging-no-reply@bnetd.ci"
+
+  - target:
+      version: v1
+      kind: Cluster
+      name: ejbca-postgresql
+    patch: |-
+      - op: replace
+        path: /spec/backup/barmanObjectStore/endpointURL
+        value: https://s3.eu-west-1.amazonaws.com
+      - op: replace
+        path: /spec/backup/barmanObjectStore/destinationPath
+        value: s3://safy-staging-ejbca/pg-backup
