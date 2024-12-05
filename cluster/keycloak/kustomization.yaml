@@ -1,0 +1,61 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - ../../base/keycloak/base
+
+patches:
+
+  - target:
+      version: v1
+      kind: Ingress
+      name: keycloak-ingress
+    patch: |-
+      - op: replace
+        path: /spec/rules/0/host
+        value: idp.staging.bnetd.ci
+      - op: replace
+        path: /spec/tls/0/hosts/0
+        value: idp.staging.bnetd.ci
+
+  - target:
+      version: v1
+      kind: Ingress
+      name: keycloak-admin-ingress
+    patch: |-
+      - op: replace
+        path: /spec/rules/0/host
+        value: admin-idp.staging.bnetd.ci
+      - op: replace
+        path: /spec/tls/0/hosts/0
+        value: admin-idp.staging.bnetd.ci
+      - op: replace
+        path: /metadata/annotations/kubernetes.io~1ingress.class
+        value: nginx
+      - op: add
+        path: "/metadata/annotations/nginx.ingress.kubernetes.io~1auth-tls-secret"
+        value: default/ejbca-ca-secret
+      - op: add
+        path: "/metadata/annotations/nginx.ingress.kubernetes.io~1auth-tls-verify-client"
+        value: 'on'
+
+  - target:
+      version: v1
+      kind: Deployment
+      name: keycloak-deployment
+    patch: |-
+      - op: add
+        path: /spec/template/spec/containers/0/env/0
+        value:
+          name: KC_HOSTNAME
+          value: https://idp.staging.bnetd.ci
+      - op: add
+        path: /spec/template/spec/containers/0/env/0
+        value:
+          name: KC_HOSTNAME_ADMIN
+          value: https://admin-idp.staging.bnetd.ci
+      - op: add
+        path: /spec/template/spec/containers/0/env/0
+        value:
+          name: KC_DB_URL
+          value: "jdbc:postgresql://safy-postgres-cluster-1-cluster.cluster-cnue6eikcwxf.eu-west-1.rds.amazonaws.com/keycloak_staging_db"
