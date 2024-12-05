@@ -36,11 +36,6 @@ spec:
             secretKeyRef:
               name: safy-vaultsecret
               key: DEFAULT_SECRET_KEY
-        - name: DOCUMENT_SERVICE_LICENSE
-          valueFrom:
-            secretKeyRef:
-              name: safy-vaultsecret
-              key: DOCUMENT_SERVICE_LICENSE
         - name: S3_SECRET_ACCESS_KEY
           valueFrom:
             secretKeyRef:

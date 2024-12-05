@@ -49,16 +49,6 @@ spec:
             secretKeyRef:
               name: ejbca-vaultsecret
               key: DB_PASSWORD
-        - name: HSM_USER
-          valueFrom:
-            secretKeyRef:
-              name: ejbca-vaultsecret
-              key: HSM_USER
-        - name: HSM_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: ejbca-vaultsecret
-              key: HSM_PASSWORD
         - name: PASSWORD_ENCRYPTION_KEY
           valueFrom:
             secretKeyRef:
