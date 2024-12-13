@@ -6,6 +6,10 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /ejbca/publicweb/crls/search.cgi
   name: ejbca-root-crl-ingress
 spec:
+  tls:
+    - hosts:
+        - c.pki.bpsusine.com
+      secretName: ejbca-crl-cert
   rules:
     - host: c.pki.bpsusine.com
       http:

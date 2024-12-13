@@ -6,6 +6,10 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /ejbca/ra/cert
   name: ejbca-root-cert-ingress
 spec:
+  tls:
+    - hosts:
+        - i.pki.bpsusine.com
+      secretName: ejbca-issuer-cert
   rules:
     - host: i.pki.bpsusine.com
       http:
