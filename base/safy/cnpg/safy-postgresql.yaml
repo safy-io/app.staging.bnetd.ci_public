@@ -14,7 +14,6 @@ spec:
       postInitSQL:
       - ALTER DATABASE safy_db OWNER TO safy_user;
       - CREATE EXTENSION IF NOT EXISTS pg_trgm;
-      - SET pg_trgm.word_similarity_threshold = 0.25;
   #   recovery:
   #     source: safy-postgresql
   #     recoveryTarget:
