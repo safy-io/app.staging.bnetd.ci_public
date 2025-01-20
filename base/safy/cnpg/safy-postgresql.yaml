@@ -11,9 +11,6 @@ spec:
     initdb:
       database: safy_db
       owner: safy_user
-      postInitSQL:
-      - ALTER DATABASE safy_db OWNER TO safy_user;
-      - CREATE EXTENSION IF NOT EXISTS pg_trgm;
   #   recovery:
   #     source: safy-postgresql
   #     recoveryTarget:
