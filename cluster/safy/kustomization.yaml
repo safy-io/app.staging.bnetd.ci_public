@@ -29,15 +29,6 @@ patches:
       - op: replace
         path: /spec/tls/0/hosts/0
         value: app-global.staging.bnetd.ci
-      - op: replace
-        path: /metadata/annotations/kubernetes.io~1ingress.class
-        value: nginx
-      - op: add
-        path: "/metadata/annotations/nginx.ingress.kubernetes.io~1auth-tls-secret"
-        value: default/ejbca-ca-secret
-      - op: add
-        path: "/metadata/annotations/nginx.ingress.kubernetes.io~1auth-tls-verify-client"
-        value: 'on'
 
   - target:
       version: v1
@@ -73,17 +64,17 @@ patches:
         path: /spec/template/spec/containers/0/env/0
         value:
           name: POSTGRESQL_HOST
-          value: safy-postgres-cluster-1-cluster.cluster-cnue6eikcwxf.eu-west-1.rds.amazonaws.com
+          value: sn-staging-postgresql.bnetd.ci
       - op: add
         path: /spec/template/spec/containers/0/env/0
         value:
           name: SMTP_SENDER_EMAIL
-          value: no-reply@b
+          value: no-reply@bnetd.ci
       - op: add
         path: /spec/template/spec/containers/0/env/0
         value:
           name: SMTP_SENDER_NAME
-          value: Safy
+          value: BNETD staging
       - op: add
         path: /spec/template/spec/containers/0/env/0
         value:

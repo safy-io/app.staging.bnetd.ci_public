@@ -29,15 +29,6 @@ patches:
       - op: replace
         path: /spec/tls/0/hosts/0
         value: admin-idp.staging.bnetd.ci
-      - op: replace
-        path: /metadata/annotations/kubernetes.io~1ingress.class
-        value: nginx
-      - op: add
-        path: "/metadata/annotations/nginx.ingress.kubernetes.io~1auth-tls-secret"
-        value: default/ejbca-ca-secret
-      - op: add
-        path: "/metadata/annotations/nginx.ingress.kubernetes.io~1auth-tls-verify-client"
-        value: 'on'
 
   - target:
       version: v1
@@ -58,4 +49,4 @@ patches:
         path: /spec/template/spec/containers/0/env/0
         value:
           name: KC_DB_URL
-          value: "jdbc:postgresql://safy-postgres-cluster-1-cluster.cluster-cnue6eikcwxf.eu-west-1.rds.amazonaws.com/keycloak_staging_db"
+          value: "jdbc:postgresql://sn-staging-postgresql.bnetd.ci/keycloak_db"
