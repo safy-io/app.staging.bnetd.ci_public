@@ -109,12 +109,17 @@ patches:
         path: /spec/template/spec/containers/0/env/0
         value:
           name: SMTP_DESTINATION_PORT
-          value: "587"
+          value: "25"
       - op: add
         path: /spec/template/spec/containers/0/env/0
         value:
           name: SMTP_SSL_ENABLED
           value: "false"
+      - op: add
+        path: /spec/template/spec/containers/0/env/0
+        value:
+          name: SMTP_TLS_ENABLED
+          value: "true"
       - op: add
         path: /spec/template/spec/containers/0/env/0
         value:
