@@ -19,10 +19,10 @@ spec:
       s3Credentials:
         accessKeyId:
           name: keycloak-vaultsecret
-          key: S3_ACCESS_KEY_ID
+          key: KEYCLOAK_BACKUP_S3_ACCESS_KEY_ID
         secretAccessKey:
           name: keycloak-vaultsecret
-          key: S3_SECRET_ACCESS_KEY
+          key: KEYCLOAK_BACKUP_S3_SECRET_ACCESS_KEY
       wal:
         compression: gzip
       data:

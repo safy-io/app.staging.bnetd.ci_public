@@ -39,10 +39,10 @@ spec:
       s3Credentials:
         accessKeyId:
           name: safy-vaultsecret
-          key: S3_ACCESS_KEY_ID
+          key: TRUSTED_SERVICE_BACKUP_S3_ACCESS_KEY_ID
         secretAccessKey:
           name: safy-vaultsecret
-          key: S3_SECRET_ACCESS_KEY
+          key: TRUSTED_SERVICE_BACKUP_S3_SECRET_ACCESS_KEY
       wal:
         compression: gzip
       data:

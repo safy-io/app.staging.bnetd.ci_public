@@ -23,10 +23,10 @@ spec:
   #       s3Credentials:
   #         accessKeyId:
   #           name: ejbca-vaultsecret
-  #           key: S3_ACCESS_KEY_ID
+  #           key: EJBCA_BACKUP_S3_ACCESS_KEY_ID
   #         secretAccessKey:
   #           name: ejbca-vaultsecret
-  #           key: S3_SECRET_ACCESS_KEY
+  #           key: EJBCA_BACKUP_S3_SECRET_ACCESS_KEY
   #       wal:
   #         compression: gzip
   #       data:
@@ -39,10 +39,10 @@ spec:
       s3Credentials:
         accessKeyId:
           name: ejbca-vaultsecret
-          key: S3_ACCESS_KEY_ID
+          key: EJBCA_BACKUP_S3_ACCESS_KEY_ID
         secretAccessKey:
           name: ejbca-vaultsecret
-          key: S3_SECRET_ACCESS_KEY
+          key: EJBCA_BACKUP_S3_SECRET_ACCESS_KEY
       wal:
         compression: gzip
       data:
