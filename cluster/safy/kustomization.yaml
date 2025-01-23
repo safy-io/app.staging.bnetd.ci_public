@@ -78,11 +78,6 @@ patches:
       - op: add
         path: /spec/template/spec/containers/0/env/0
         value:
-          name: S3_REGION
-          value: eu-west-1
-      - op: add
-        path: /spec/template/spec/containers/0/env/0
-        value:
           name: S3_ENDPOINT
           value: http://sn-staging-minio.bnetd.ci:9000
       - op: add
@@ -124,11 +119,6 @@ patches:
         value:
           name: TRUSTED_SERVICE_GLOBAL_URL
           value: https://app-global.staging.bnetd.ci/
-      - op: add
-        path: /spec/template/spec/containers/0/env/0
-        value:
-          name: S3_REGION
-          value: eu-west-1
       - op: add
         path: /spec/template/spec/containers/0/env/0
         value:
