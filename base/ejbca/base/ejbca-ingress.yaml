@@ -19,8 +19,6 @@ metadata:
     # To be fixed with ejbca-ca-secret namespace
     nginx.ingress.kubernetes.io/auth-tls-secret: "default/ejbca-ca-secret"
     nginx.ingress.kubernetes.io/auth-tls-pass-certificate-to-upstream: "true"
-    nginx.ingress.kubernetes.io/configuration-snippet: |
-      proxy_set_header SSL_CLIENT_CERT $ssl_client_cert;
 spec:
   tls:
     - hosts:

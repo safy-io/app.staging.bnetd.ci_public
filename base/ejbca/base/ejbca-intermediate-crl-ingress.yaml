@@ -16,7 +16,7 @@ spec:
       http:
         paths:
           - path: /safy-intermediate-ca.crl
-            pathType: Exact
+            pathType: ImplementationSpecific
             backend:
               service:
                 name: ejbca-service
