@@ -31,21 +31,6 @@ spec:
         env:
         - name: CLAMAV_ADDRESS
           value: localhost
-        - name: DEFAULT_SECRET_KEY
-          valueFrom:
-            secretKeyRef:
-              name: safy-vaultsecret
-              key: DEFAULT_SECRET_KEY
-        - name: S3_SECRET_ACCESS_KEY
-          valueFrom:
-            secretKeyRef:
-              name: safy-vaultsecret
-              key: DOCUMENT_SERVICE_S3_SECRET_ACCESS_KEY
-        - name: S3_ACCESS_KEY_ID
-          valueFrom:
-            secretKeyRef:
-              name: safy-vaultsecret
-              key: DOCUMENT_SERVICE_S3_ACCESS_KEY_ID
  
         ports:
         - name: http
