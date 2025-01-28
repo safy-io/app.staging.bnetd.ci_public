@@ -36,21 +36,6 @@ spec:
         env:
         - name: KEYCLOAK_ADMIN
           value: admin
-        - name: KEYCLOAK_ADMIN_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: keycloak-vaultsecret
-              key: KEYCLOAK_ADMIN_PASSWORD
-        - name: KC_DB_USERNAME
-          valueFrom:
-            secretKeyRef:
-              name: keycloak-vaultsecret
-              key: KEYCLOAK_DB_USER
-        - name: KC_DB_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: keycloak-vaultsecret
-              key: KEYCLOAK_DB_PASSWORD
         - name: KC_PROXY_HEADERS
           value: xforwarded
         livenessProbe:

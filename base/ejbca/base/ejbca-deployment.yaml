@@ -39,31 +39,6 @@ spec:
           value: "0.0.0.0"
         - name: TLS_SETUP_ENABLED
           value: later
-        - name: DATABASE_USER
-          valueFrom:
-            secretKeyRef:
-              name: ejbca-vaultsecret
-              key: EJBCA_DB_USER
-        - name: DATABASE_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: ejbca-vaultsecret
-              key: EJBCA_DB_PASSWORD
-        - name: PASSWORD_ENCRYPTION_KEY
-          valueFrom:
-            secretKeyRef:
-              name: ejbca-vaultsecret
-              key: EJBCA_PASSWORD_ENCRYPTION_KEY        
-        - name: SMTP_USERNAME
-          valueFrom:
-            secretKeyRef:
-              name: ejbca-vaultsecret
-              key: SMTP_USERNAME
-        - name: SMTP_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: ejbca-vaultsecret
-              key: SMTP_PASSWORD
 
         startupProbe:
           httpGet:
