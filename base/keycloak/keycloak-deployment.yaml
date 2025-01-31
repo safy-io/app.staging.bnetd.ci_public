@@ -1,0 +1,82 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: keycloak-deployment
+  labels:
+    app: keycloak
+spec:
+  replicas: 1
+  revisionHistoryLimit: 0
+  selector:
+    matchLabels:
+      app: keycloak
+  template:
+    metadata:
+      labels:
+        app: keycloak
+    spec:
+      containers:
+      - name: keycloak
+        image: ghcr.io/safy-io/keycloak:master
+        imagePullPolicy: Always
+        resources:
+          limits:
+            cpu: "1"
+            memory: 2Gi
+          requests:
+            cpu: 100m
+            memory: 1Gi
+        args: 
+        - start
+        - "--optimized"
+        - "--spi-theme-static-max-age=3600"
+        ports:
+        - containerPort: 8080
+          name: http
+        env:
+        - name: KC_PROXY_HEADERS
+          value: xforwarded
+        - name: KC_HOSTNAME
+          valueFrom:
+            secretKeyRef:
+              name: safy-vaultsecret
+              key: KEYCLOAK_URL
+        - name: KC_HOSTNAME_ADMIN
+          valueFrom:
+            secretKeyRef:
+              name: safy-vaultsecret
+              key: KEYCLOAK_ADMIN_URL
+        - name: KEYCLOAK_ADMIN
+          value: admin
+        - name: KEYCLOAK_ADMIN_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: safy-vaultsecret
+              key: KEYCLOAK_ADMIN_PASSWORD
+        - name: KC_DB_URL
+          valueFrom:
+            secretKeyRef:
+              name: safy-vaultsecret
+              key: KEYCLOAK_JDBC_URL
+        - name: KC_DB_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: safy-vaultsecret
+              key: KEYCLOAK_DB_USER
+        - name: KC_DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: safy-vaultsecret
+              key: KEYCLOAK_DB_PASSWORD
+        livenessProbe:
+          failureThreshold: 8
+          initialDelaySeconds: 30
+          httpGet:
+            path: /realms/master
+            port: http
+        readinessProbe:
+          failureThreshold: 8
+          initialDelaySeconds: 30
+          httpGet:
+            path: /realms/master
+            port: http

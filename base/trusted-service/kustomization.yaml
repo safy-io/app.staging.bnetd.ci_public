@@ -1,0 +1,8 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - trusted-service-deployment.yaml
+  - trusted-service-global-ingress.yaml
+  - trusted-service-ingress.yaml
+  - trusted-service-service.yaml

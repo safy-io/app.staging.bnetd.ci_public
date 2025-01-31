@@ -1,0 +1,54 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namePrefix: postgresql-backup-
+
+resources:
+  - ../../minio
+
+patches:
+
+  - target:
+      version: v1
+      kind: Deployment
+      name: minio-deployment
+    patch: |-
+      - op: replace
+        path: /metadata/labels/app
+        value: postgresql-backup-minio
+      - op: replace
+        path: /spec/selector/matchLabels/app
+        value: postgresql-backup-minio
+      - op: replace
+        path: /spec/template/metadata/labels/app
+        value: postgresql-backup-minio
+      - op: replace
+        path: /spec/template/spec/volumes/0/persistentVolumeClaim/claimName
+        value: postgresql-backup-minio-pvc
+
+  - target:
+      version: v1
+      kind: Service
+      name: minio-service
+    patch: |-
+      - op: replace
+        path: /spec/selector/app
+        value: postgresql-backup-minio
+
+  - target:
+      version: v1
+      kind: Ingress
+      name: minio-ingress
+    patch: |-
+      - op: replace
+        path: /spec/rules/0/http/paths/0/backend/service/name
+        value: postgresql-backup-minio-service
+      - op: replace
+        path: /spec/rules/0/host
+        value: postgresql-backup-minio.bpsusine.com
+      - op: replace
+        path: /spec/tls/0/hosts/0
+        value: postgresql-backup-minio.bpsusine.com
+      - op: replace
+        path: /spec/tls/0/secretName
+        value: postgresql-backup-minio-cert

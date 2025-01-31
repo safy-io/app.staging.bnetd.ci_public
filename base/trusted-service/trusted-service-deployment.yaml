@@ -1,0 +1,178 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: trusted-service-deployment
+  labels:
+    app: trusted-service
+spec:
+  replicas: 1
+  revisionHistoryLimit: 0
+  selector:
+    matchLabels:
+      app: trusted-service
+  template:
+    metadata:
+      labels:
+        app: trusted-service
+    spec:
+      containers:
+      - name: application
+        image: ghcr.io/safy-io/safy/safy-trusted-service:1.3.1
+        imagePullPolicy: Always
+
+        resources:
+          requests:
+            cpu: 100m
+            memory: 512Mi
+          limits:
+            cpu: "1"
+            memory: 2Gi
+
+        env:
+        - name: SERVER_URL
+          valueFrom:
+            secretKeyRef:
+              name: safy-vaultsecret
+              key: TRUSTED_SERVICE_URL
+        - name: CMP_URL
+          valueFrom:
+            secretKeyRef:
+              name: safy-vaultsecret
+              key: TRUSTED_SERVICE_CMP_URL
+        - name: CMP_HMAC_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: safy-vaultsecret
+              key: TRUSTED_SERVICE_CMP_HMAC_SECRET
+        - name: ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: safy-vaultsecret
+              key: TRUSTED_SERVICE_ROOT_PASSWORD
+        - name: POSTGRESQL_HOST
+          valueFrom:
+            secretKeyRef:
+              name: safy-vaultsecret
+              key: TRUSTED_SERVICE_DB_HOST
+        - name: POSTGRESQL_DATABASE
+          valueFrom:
+            secretKeyRef:
+              name: safy-vaultsecret
+              key: TRUSTED_SERVICE_DB_NAME
+        - name: POSTGRESQL_PARAMETERS
+          value: ?ssl=true&sslmode=require&preparedStatementCacheQueries=0
+        - name: POSTGRESQL_PORT
+          valueFrom:
+            secretKeyRef:
+              name: safy-vaultsecret
+              key: TRUSTED_SERVICE_DB_PORT
+        - name: POSTGRESQL_USER
+          valueFrom:
+            secretKeyRef:
+              name: safy-vaultsecret
+              key: TRUSTED_SERVICE_DB_USER
+        - name: POSTGRESQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: safy-vaultsecret
+              key: TRUSTED_SERVICE_DB_PASSWORD
+        - name: S3_ACCESS_KEY_ID
+          valueFrom:
+            secretKeyRef:
+              name: safy-vaultsecret
+              key: TRUSTED_SERVICE_S3_ACCESS_KEY_ID
+        - name: S3_SECRET_ACCESS_KEY
+          valueFrom:
+            secretKeyRef:
+              name: safy-vaultsecret
+              key: TRUSTED_SERVICE_S3_SECRET_ACCESS_KEY
+        - name: SMTP_ADDRESS
+          valueFrom:
+            secretKeyRef:
+              name: safy-vaultsecret
+              key: SMTP_ADDRESS
+        - name: SMTP_PORT
+          valueFrom:
+            secretKeyRef:
+              name: safy-vaultsecret
+              key: SMTP_PORT
+        - name: SMTP_USER
+          valueFrom:
+            secretKeyRef:
+              name: safy-vaultsecret
+              key: SMTP_USERNAME
+        - name: SMTP_FROM_EMAIL
+          valueFrom:
+            secretKeyRef:
+              name: safy-vaultsecret
+              key: TRUSTED_SERVICE_SMTP_FROM_EMAIL
+        - name: SMTP_FROM_NAME
+          valueFrom:
+            secretKeyRef:
+              name: safy-vaultsecret
+              key: TRUSTED_SERVICE_SMTP_FROM_NAME
+        - name: SMTP_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: safy-vaultsecret
+              key: SMTP_PASSWORD
+        - name: SMTP_SSL
+          valueFrom:
+            secretKeyRef:
+              name: safy-vaultsecret
+              key: SMTP_SSL
+        - name: SMTP_START_TLS
+          valueFrom:
+            secretKeyRef:
+              name: safy-vaultsecret
+              key: SMTP_START_TLS
+        - name: TWILIO_ACCOUNT
+          valueFrom:
+            secretKeyRef:
+              name: safy-vaultsecret
+              key: TWILIO_ACCOUNT
+        - name: TWILIO_API_KEY_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: safy-vaultsecret
+              key: TWILIO_API_KEY_SECRET
+        - name: TWILIO_API_KEY_SID
+          valueFrom:
+            secretKeyRef:
+              name: safy-vaultsecret
+              key: TWILIO_API_KEY_SID
+        - name: TWILIO_SMS_SENDER_PHONE
+          valueFrom:
+            secretKeyRef:
+              name: safy-vaultsecret
+              key: TWILIO_SMS_SENDER_PHONE
+        - name: TWILIO_WHATSAPP_SENDER_PHONE
+          valueFrom:
+            secretKeyRef:
+              name: safy-vaultsecret
+              key: TWILIO_WHATSAPP_SENDER_PHONE
+
+        ports:
+        - name: http
+          containerPort: 8789
+          protocol: TCP
+        
+        startupProbe:
+          httpGet:
+            path: /api/health
+            port: http
+          failureThreshold: 20
+        livenessProbe:
+          httpGet:
+            path: /api/health
+            port: http
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /api/health
+            port: http
+          failureThreshold: 1
+      
+        volumeMounts: []
+
+      volumes: []

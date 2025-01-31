@@ -1,0 +1,94 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namePrefix: ejbca-
+
+resources:
+  - ../../cnpg-with-minio
+
+patches:
+
+  - target:
+      version: v1
+      kind: Deployment
+      name: minio-deployment
+    patch: |-
+      - op: replace
+        path: /metadata/labels/app
+        value: ejbca-postgresql-backup-minio
+      - op: replace
+        path: /spec/selector/matchLabels/app
+        value: ejbca-postgresql-backup-minio
+      - op: replace
+        path: /spec/template/metadata/labels/app
+        value: ejbca-postgresql-backup-minio
+      - op: add
+        path: /spec/template/spec/containers/0/env/0
+        value:
+          name: MINIO_ROOT_USER
+          valueFrom:
+            secretKeyRef:
+              name: safy-vaultsecret
+              key: EJBCA_BACKUP_S3_ACCESS_KEY_ID
+      - op: add
+        path: /spec/template/spec/containers/0/env/0
+        value:
+          name: MINIO_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: safy-vaultsecret
+              key: EJBCA_BACKUP_S3_SECRET_ACCESS_KEY
+      - op: replace
+        path: /spec/template/spec/volumes/0/persistentVolumeClaim/claimName
+        value: ejbca-postgresql-backup-minio-pvc
+
+  - target:
+      version: v1
+      kind: Service
+      name: minio-service
+    patch: |-
+      - op: replace
+        path: /spec/selector/app
+        value: ejbca-postgresql-backup-minio
+
+  - target:
+      version: v1
+      kind: Ingress
+      name: minio-ingress
+    patch: |-
+      - op: replace
+        path: /spec/rules/0/http/paths/0/backend/service/name
+        value: ejbca-postgresql-backup-minio-service
+      - op: replace
+        path: /spec/rules/0/host
+        value: ejbca-postgresql-backup-minio.bpsusine.com
+      - op: replace
+        path: /spec/tls/0/hosts/0
+        value: ejbca-postgresql-backup-minio.bpsusine.com
+      - op: replace
+        path: /spec/tls/0/secretName
+        value: ejbca-postgresql-backup-minio-cert
+
+  - target:
+      version: v1
+      kind: Cluster
+      name: postgresql
+    patch: |-
+      - op: replace
+        path: /spec/backup/barmanObjectStore/endpointURL
+        value: http://ejbca-postgresql-backup-minio-service:9000
+      - op: replace
+        path: /spec/backup/barmanObjectStore/s3Credentials/accessKeyId/key
+        value: EJBCA_BACKUP_S3_ACCESS_KEY_ID
+      - op: replace
+        path: /spec/backup/barmanObjectStore/s3Credentials/secretAccessKey/key
+        value: EJBCA_BACKUP_S3_SECRET_ACCESS_KEY
+
+  - target:
+      version: v1
+      kind: ScheduledBackup
+      name: postgresql-scheduledbackup
+    patch: |-
+      - op: replace
+        path: /spec/cluster/name
+        value: ejbca-postgresql

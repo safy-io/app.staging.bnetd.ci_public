@@ -1,9 +1,0 @@
-apiVersion: postgresql.cnpg.io/v1
-kind: ScheduledBackup
-metadata:
-  name: safy-scheduledbackup
-spec:
-  schedule: "0 0 0 * * *"
-  immediate: true
-  cluster:
-    name: safy-postgresql
