@@ -31,11 +31,11 @@ spec:
         env:
         - name: CLAMAV_ADDRESS
           value: localhost
-         - name: DEFAULT_SECRET_KEY
+        - name: DEFAULT_SECRET_KEY
           valueFrom:
             secretKeyRef:
               name: safy-vaultsecret
-              key: DEFAULT_SECRET_KEY
+              key: DOCUMENT_SERVICE_DEFAULT_SECRET_KEY
         - name: S3_SECRET_ACCESS_KEY
           valueFrom:
             secretKeyRef:

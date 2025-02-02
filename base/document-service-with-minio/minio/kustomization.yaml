@@ -1,0 +1,70 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namePrefix: document-service-
+
+resources:
+  - ../../minio
+
+patches:
+
+  - target:
+      version: v1
+      kind: Deployment
+      name: minio-deployment
+    patch: |-
+      - op: replace
+        path: /metadata/labels/app
+        value: document-service-minio
+      - op: replace
+        path: /spec/selector/matchLabels/app
+        value: document-service-minio
+      - op: replace
+        path: /spec/template/metadata/labels/app
+        value: document-service-minio
+      - op: add
+        path: /spec/template/spec/containers/0/env/0
+        value:
+          name: MINIO_ROOT_USER
+          valueFrom:
+            secretKeyRef:
+              name: safy-vaultsecret
+              key: DOCUMENT_SERVICE_S3_ACCESS_KEY_ID
+      - op: add
+        path: /spec/template/spec/containers/0/env/0
+        value:
+          name: MINIO_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: safy-vaultsecret
+              key: DOCUMENT_SERVICE_S3_SECRET_ACCESS_KEY
+      - op: replace
+        path: /spec/template/spec/volumes/0/persistentVolumeClaim/claimName
+        value: document-service-minio-pvc
+
+  - target:
+      version: v1
+      kind: Service
+      name: minio-service
+    patch: |-
+      - op: replace
+        path: /spec/selector/app
+        value: document-service-minio
+
+  - target:
+      version: v1
+      kind: Ingress
+      name: minio-ingress
+    patch: |-
+      - op: replace
+        path: /spec/rules/0/http/paths/0/backend/service/name
+        value: document-service-minio-service
+      - op: replace
+        path: /spec/rules/0/host
+        value: document-service-minio.bpsusine.com
+      - op: replace
+        path: /spec/tls/0/hosts/0
+        value: document-service-minio.bpsusine.com
+      - op: replace
+        path: /spec/tls/0/secretName
+        value: document-service-minio-cert
