@@ -3,4 +3,5 @@ kind: Kustomization
 
 resources:
   - postgresql.yaml
+  - postgresql-vaultsecret.yaml
   - postgresql-scheduledbackup.yaml

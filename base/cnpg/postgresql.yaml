@@ -31,6 +31,13 @@ spec:
   #         compression: gzip
   #       data:
   #         compression: gzip
+  managed:
+    roles:
+    - name: postgresql_user
+      login: true
+      superuser: false
+      passwordSecret:
+        name: postgresql-vaultsecret
   backup:
     retentionPolicy: 30d
     barmanObjectStore:

@@ -70,6 +70,18 @@ patches:
         value: keycloak-postgresql-backup-minio-cert
 
   - target:
+      version: v1alpha1
+      kind: VaultSecret
+      name: postgresql-vaultsecret
+    patch: |-
+      - op: replace
+        path: /spec/keys
+        value: [KEYCLOAK_DB_PASSWORD]
+      - op: replace
+        path: /spec/templates/password
+        value: "{% .Secrets.KEYCLOAK_DB_PASSWORD %}"
+
+  - target:
       version: v1
       kind: Cluster
       name: postgresql
@@ -77,6 +89,9 @@ patches:
       - op: replace
         path: /spec/backup/barmanObjectStore/endpointURL
         value: http://keycloak-postgresql-backup-minio-service:9000
+      - op: replace
+        path: /spec/managed/roles/0/passwordSecret/name
+        value: keycloak-postgresql-vaultsecret
       - op: replace
         path: /spec/backup/barmanObjectStore/s3Credentials/accessKeyId/key
         value: KEYCLOAK_BACKUP_S3_ACCESS_KEY_ID

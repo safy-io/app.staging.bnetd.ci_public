@@ -70,6 +70,18 @@ patches:
         value: trusted-service-postgresql-backup-minio-cert
 
   - target:
+      version: v1alpha1
+      kind: VaultSecret
+      name: postgresql-vaultsecret
+    patch: |-
+      - op: replace
+        path: /spec/keys
+        value: [TRUSTED_SERVICE_DB_PASSWORD]
+      - op: replace
+        path: /spec/templates/password
+        value: "{% .Secrets.TRUSTED_SERVICE_DB_PASSWORD %}"
+
+  - target:
       version: v1
       kind: Cluster
       name: postgresql
@@ -77,6 +89,9 @@ patches:
       - op: replace
         path: /spec/backup/barmanObjectStore/endpointURL
         value: http://trusted-service-postgresql-backup-minio-service:9000
+      - op: replace
+        path: /spec/managed/roles/0/passwordSecret/name
+        value: trusted-service-postgresql-vaultsecret
       - op: replace
         path: /spec/backup/barmanObjectStore/s3Credentials/accessKeyId/key
         value: TRUSTED_SERVICE_BACKUP_S3_ACCESS_KEY_ID
