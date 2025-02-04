@@ -4,3 +4,16 @@ kind: Kustomization
 resources:
   - ../document-service
   - minio
+
+patches:
+
+  - target:
+      version: v1
+      kind: Deployment
+      name: document-service-deployment
+    patch: |-
+      - op: add
+        path: /spec/template/spec/containers/0/env/0
+        value:
+          name: S3_ENDPOINT
+          value: http://document-service-minio-service:9000
