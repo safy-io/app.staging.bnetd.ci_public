@@ -33,9 +33,11 @@ spec:
   #         compression: gzip
   managed:
     roles:
-    - name: postgresql_user
+    - connectionLimit: -1
+      ensure: present
+      inherit: true
       login: true
-      superuser: false
+      name: postgresql_user
       passwordSecret:
         name: postgresql-vaultsecret
   backup:
