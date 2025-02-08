@@ -3,14 +3,9 @@ kind: Ingress
 metadata:
   name: ejbca-intermediate-crl-ingress
   annotations:
-    cert-manager.io/cluster-issuer: letsencrypt-prod
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/rewrite-target: /ejbca/publicweb/crls/search.cgi
 spec:
-  tls:
-    - hosts:
-        - c.pki.bpsusine.com
-      secretName: ejbca-crl-cert
   rules:
     - host: c.pki.bpsusine.com
       http:

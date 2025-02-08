@@ -3,14 +3,9 @@ kind: Ingress
 metadata:
   name: ejbca-ocsp-ingress
   annotations:
-    cert-manager.io/cluster-issuer: letsencrypt-prod
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/rewrite-target: /ejbca/publicweb/status/ocsp
 spec:
-  tls:
-    - hosts:
-        - o.pki.bpsusine.com
-      secretName: ejbca-ocsp-cert
   rules:
     - host: o.pki.bpsusine.com
       http:
