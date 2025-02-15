@@ -19,7 +19,7 @@ spec:
       http:
         paths:
           - path: /safy-intermediate-ca.cer
-            pathType: Exact
+            pathType: ImplementationSpecific
             backend:
               service:
                 name: ejbca-service
