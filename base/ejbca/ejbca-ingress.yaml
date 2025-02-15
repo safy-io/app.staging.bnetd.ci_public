@@ -17,7 +17,7 @@ metadata:
     nginx.ingress.kubernetes.io/auth-tls-verify-client: "optional"
     #nginx.ingress.kubernetes.io/auth-tls-verify-client: "off"
     # To be fixed with ejbca-ca-secret namespace
-    nginx.ingress.kubernetes.io/auth-tls-secret: "default/ejbca-ca-secret"
+    nginx.ingress.kubernetes.io/auth-tls-secret: "ejbca-ca-secret"
     nginx.ingress.kubernetes.io/auth-tls-pass-certificate-to-upstream: "true"
 spec:
   tls:
