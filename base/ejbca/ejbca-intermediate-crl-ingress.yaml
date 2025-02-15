@@ -5,7 +5,10 @@ metadata:
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-prod
     kubernetes.io/ingress.class: nginx
-    nginx.ingress.kubernetes.io/rewrite-target: /ejbca/publicweb/crls/search.cgi
+    nginx.ingress.kubernetes.io/configuration-snippet: >
+      rewrite ^/
+      /ejbca/publicweb/crls/search.cgi?iHash=lNZzXGxLv1J4%2BSbHzkfYwViyE1M
+      break;
 spec:
   tls:
     - hosts:
