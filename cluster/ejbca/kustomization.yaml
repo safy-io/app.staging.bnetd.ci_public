@@ -2,7 +2,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-  - ../../base/ejbca/base
+  - ../../base/ejbca
 
 patches:
 
@@ -27,8 +27,11 @@ patches:
         path: /spec/rules/0/host
         value: o.pki.staging.bnetd.ci
       - op: replace
+        path: /spec/tls/0/hosts/0
+        value: o.pki.staging.bnetd.ci
+      - op: replace
         path: /spec/rules/0/http/paths/0/path
-        value: /safy-intermediate-ca-g1
+        value: /bnetd-intermediate-ca-g1
 
   - target:
       version: v1
@@ -39,11 +42,17 @@ patches:
         path: /spec/rules/0/host
         value: c.pki.staging.bnetd.ci
       - op: replace
-        path: /spec/rules/0/http/paths/0/path
-        value: /safy-root-ca-g1.crl
+        path: /spec/tls/0/hosts/0
+        value: c.pki.staging.bnetd.ci
       - op: replace
-        path: /metadata/annotations/nginx.ingress.kubernetes.io~1rewrite-target
-        value: /ejbca/publicweb/crls/search.cgi?iHash=mlReplwl%2BBC0/nktHjUGzv2eZVU
+        path: /spec/rules/0/http/paths/0/path
+        value: /bnetd-root-ca-g1.crl
+      - op: replace
+        path: /metadata/annotations/nginx.ingress.kubernetes.io~1configuration-snippet
+        value: >
+          rewrite ^/
+          /ejbca/publicweb/crls/search.cgi?iHash=yxP5H6OQqbvS1vYE3akRBO3YTy0
+          break;
 
   - target:
       version: v1
@@ -54,11 +63,17 @@ patches:
         path: /spec/rules/0/host
         value: c.pki.staging.bnetd.ci
       - op: replace
-        path: /spec/rules/0/http/paths/0/path
-        value: /safy-intermediate-ca-g1.crl
+        path: /spec/tls/0/hosts/0
+        value: c.pki.staging.bnetd.ci
       - op: replace
-        path: /metadata/annotations/nginx.ingress.kubernetes.io~1rewrite-target
-        value: /ejbca/publicweb/crls/search.cgi?iHash=lNZzXGxLv1J4%2BSbHzkfYwViyE1M
+        path: /spec/rules/0/http/paths/0/path
+        value: /bnetd-intermediate-ca-g1.crl
+      - op: replace
+        path: /metadata/annotations/nginx.ingress.kubernetes.io~1configuration-snippet
+        value: >
+          rewrite ^/
+          /ejbca/publicweb/crls/search.cgi?iHash=DZc6/h3bunbcDH2YN9ueodWb9q8
+          break;
 
   - target:
       version: v1
@@ -69,11 +84,17 @@ patches:
         path: /spec/rules/0/host
         value: i.pki.staging.bnetd.ci
       - op: replace
-        path: /spec/rules/0/http/paths/0/path
-        value: /safy-root-ca-g1.cer
+        path: /spec/tls/0/hosts/0
+        value: i.pki.staging.bnetd.ci
       - op: replace
-        path: /metadata/annotations/nginx.ingress.kubernetes.io~1rewrite-target
-        value: /ejbca/publicweb/webdist/certdist?cmd=iecacert&issuer=CN%3DSafy+Root+CA+G1+%28staging%29%2CorganizationIdentifier%3DNTRMA-135645%2CO%3DSAFY.io%2CC%3DMA&level=0
+        path: /spec/rules/0/http/paths/0/path
+        value: /bnetd-root-ca-g1.cer
+      - op: replace
+        path: /metadata/annotations/nginx.ingress.kubernetes.io~1configuration-snippet
+        value: >
+          rewrite ^/
+          /ejbca/publicweb/webdist/certdist?cmd=iecacert&level=0&issuer=CN%3DToosign+Root+CA+G2%2CorganizationIdentifier%3DNTRCI-CI-ABJ-2020-B-00136%2CO%3DTOOSIGN+COTE+D%27IVOIRE%2CC%3DCI
+          break;
 
   - target:
       version: v1
@@ -84,44 +105,14 @@ patches:
         path: /spec/rules/0/host
         value: i.pki.staging.bnetd.ci
       - op: replace
-        path: /spec/rules/0/http/paths/0/path
-        value: /safy-intermediate-ca-g1.cer
+        path: /spec/tls/0/hosts/0
+        value: i.pki.staging.bnetd.ci
       - op: replace
-        path: /metadata/annotations/nginx.ingress.kubernetes.io~1rewrite-target
-        value: /ejbca/publicweb/webdist/certdist?cmd=iecacert&issuer=CN%3DSafy+Intermediate+CA+G1+%28staging%29%2CorganizationIdentifier%3DNTRMA-135645%2CO%3DSAFY.io%2CC%3DMA&level=0
-
-  - target:
-      version: v1
-      kind: Deployment
-      name: ejbca-deployment
-    patch: |-
-      - op: add
-        path: /spec/template/spec/containers/0/env/0
-        value:
-          name: DATABASE_JDBC_URL
-          value: "jdbc:postgresql://sn-staging-postgresql.bnetd.ci/ejbca_db"
-      - op: add
-        path: /spec/template/spec/containers/0/env/0
-        value:
-          name: SMTP_DESTINATION
-          value: "smtp.office365.com"
-      - op: add
-        path: /spec/template/spec/containers/0/env/0
-        value:
-          name: SMTP_DESTINATION_PORT
-          value: "25"
-      - op: add
-        path: /spec/template/spec/containers/0/env/0
-        value:
-          name: SMTP_SSL_ENABLED
-          value: "false"
-      - op: add
-        path: /spec/template/spec/containers/0/env/0
-        value:
-          name: SMTP_TLS_ENABLED
-          value: "true"
-      - op: add
-        path: /spec/template/spec/containers/0/env/0
-        value:
-          name: SMTP_FROM
-          value: "ejbca-staging-no-reply@bnetd.ci"
+        path: /spec/rules/0/http/paths/0/path
+        value: /bnetd-intermediate-ca-g1.cer
+      - op: replace
+        path: /metadata/annotations/nginx.ingress.kubernetes.io~1configuration-snippet
+        value: >
+          rewrite ^/
+          /ejbca/publicweb/webdist/certdist?cmd=iecacert&level=0&issuer=CN%3DToosign+Intermediate+CA+G2%2CorganizationIdentifier%3DNTRCI-CI-ABJ-2020-B-00136%2CO%3DTOOSIGN+COTE+D%27IVOIRE%2CC%3DCI
+          break;
