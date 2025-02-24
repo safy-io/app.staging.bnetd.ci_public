@@ -1,0 +1,28 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - ../../base/document-service
+
+patches:
+
+  - target:
+      version: v1
+      kind: Ingress
+      name: document-service-ingress
+    patch: |-
+      - op: replace
+        path: /spec/rules/0/host
+        value: document.staging.bnetd.ci
+      - op: replace
+        path: /spec/tls/0/hosts/0
+        value: document.staging.bnetd.ci
+
+  - target:
+      version: v1
+      kind: Deployment
+      name: document-service-deployment
+    patch: |-
+      - op: replace
+        path: /spec/template/spec/containers/0/image
+        value: ghcr.io/safy-io/safy/safy-document-service:master

@@ -1,0 +1,40 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - ../../base/trusted-service-with-cnpg-with-minio
+
+patches:
+
+  - target:
+      version: v1
+      kind: Ingress
+      name: trusted-service-ingress
+    patch: |-
+      - op: replace
+        path: /spec/rules/0/host
+        value: app.staging.bnetd.ci
+      - op: replace
+        path: /spec/tls/0/hosts/0
+        value: app.staging.bnetd.ci
+
+  - target:
+      version: v1
+      kind: Ingress
+      name: trusted-service-global-ingress
+    patch: |-
+      - op: replace
+        path: /spec/rules/0/host
+        value: app-global.staging.bnetd.ci
+      - op: replace
+        path: /spec/tls/0/hosts/0
+        value: app-global.staging.bnetd.ci
+
+  - target:
+      version: v1
+      kind: Deployment
+      name: trusted-service-deployment
+    patch: |-
+      - op: replace
+        path: /spec/template/spec/containers/0/image
+        value: ghcr.io/safy-io/safy/safy-trusted-service:master

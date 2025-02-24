@@ -29,24 +29,3 @@ patches:
       - op: replace
         path: /spec/tls/0/hosts/0
         value: admin-idp.staging.bnetd.ci
-
-  - target:
-      version: v1
-      kind: Deployment
-      name: keycloak-deployment
-    patch: |-
-      - op: add
-        path: /spec/template/spec/containers/0/env/0
-        value:
-          name: KC_HOSTNAME
-          value: https://idp.staging.bnetd.ci
-      - op: add
-        path: /spec/template/spec/containers/0/env/0
-        value:
-          name: KC_HOSTNAME_ADMIN
-          value: https://admin-idp.staging.bnetd.ci
-      - op: add
-        path: /spec/template/spec/containers/0/env/0
-        value:
-          name: KC_DB_URL
-          value: "jdbc:postgresql://sn-staging-postgresql.bnetd.ci/keycloak_db"
