@@ -17,6 +17,9 @@ patches:
       - op: replace
         path: /spec/tls/0/hosts/0
         value: ejbca.staging.bnetd.ci
+      - op: replace
+        path: "/metadata/annotations/nginx.ingress.kubernetes.io~1auth-tls-secret"
+        value: safy-staging/ejbca-ca-secret
 
   - target:
       version: v1
