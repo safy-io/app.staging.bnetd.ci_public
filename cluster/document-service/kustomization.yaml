@@ -26,3 +26,13 @@ patches:
       - op: replace
         path: /spec/template/spec/containers/0/image
         value: ghcr.io/safy-io/safy/safy-document-service:master
+      - op: add
+        path: /spec/template/spec/containers/0/env/0
+        value:
+          name: S3_TEMP_BUCKET
+          value: safy-document-svc-temp
+      - op: add
+        path: /spec/template/spec/containers/0/env/0
+        value:
+          name: S3_PERSISTENT_BUCKET
+          value: safy-document-svc-app
