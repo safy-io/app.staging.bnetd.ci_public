@@ -38,3 +38,13 @@ patches:
       - op: replace
         path: /spec/template/spec/containers/0/image
         value: ghcr.io/safy-io/safy/safy-trusted-service:master
+      - op: add
+        path: /spec/template/spec/containers/0/env/0
+        value:
+          name: S3_TEMP_BUCKET
+          value: safy-trusted-svc-temp
+      - op: add
+        path: /spec/template/spec/containers/0/env/0
+        value:
+          name: S3_PERSISTENT_BUCKET
+          value: safy-trusted-svc-app
