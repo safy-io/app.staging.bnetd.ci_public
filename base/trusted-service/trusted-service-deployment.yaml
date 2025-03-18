@@ -176,12 +176,10 @@ spec:
           httpGet:
             path: /api/health
             port: http
-          failureThreshold: 3
         readinessProbe:
           httpGet:
             path: /api/health
             port: http
-          failureThreshold: 1
       
         volumeMounts: []
 

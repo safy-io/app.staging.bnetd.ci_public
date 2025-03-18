@@ -76,12 +76,10 @@ spec:
           httpGet:
             path: /api/info
             port: http
-          failureThreshold: 3
         readinessProbe:
           httpGet:
             path: /api/info
             port: http
-          failureThreshold: 1
 
       - name: clamav
         image: clamav/clamav:1.2
@@ -102,22 +100,15 @@ spec:
         
         startupProbe:
           initialDelaySeconds: 60
-          failureThreshold: 3
+          failureThreshold: 20
           periodSeconds: 30
           tcpSocket:
             port: tcp
-          timeoutSeconds: 1
         livenessProbe:
           initialDelaySeconds: 300
-          failureThreshold: 3
-          periodSeconds: 10
           tcpSocket:
             port: tcp
-          timeoutSeconds: 1
         readinessProbe:
           initialDelaySeconds: 90
-          failureThreshold: 3
-          periodSeconds: 10
           tcpSocket:
             port: tcp
-          timeoutSeconds: 1

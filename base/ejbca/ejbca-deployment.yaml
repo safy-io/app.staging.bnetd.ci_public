@@ -101,13 +101,11 @@ spec:
             path: /ejbca/publicweb/healthcheck/ejbcahealth
             port: proxied-http
           timeoutSeconds: 5
-          failureThreshold: 3
         readinessProbe:
           httpGet:
             path: /ejbca/publicweb/healthcheck/ejbcahealth
             port: proxied-http
           timeoutSeconds: 5
-          failureThreshold: 1
       
         volumeMounts: []
 
