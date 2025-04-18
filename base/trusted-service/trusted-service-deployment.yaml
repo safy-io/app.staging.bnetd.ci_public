@@ -39,16 +39,6 @@ spec:
             secretKeyRef:
               name: safy-vaultsecret
               key: TRUSTED_SERVICE_GLOBAL_URL
-        - name: CMP_URL
-          valueFrom:
-            secretKeyRef:
-              name: safy-vaultsecret
-              key: TRUSTED_SERVICE_CMP_URL
-        - name: CMP_HMAC_SECRET
-          valueFrom:
-            secretKeyRef:
-              name: safy-vaultsecret
-              key: TRUSTED_SERVICE_CMP_HMAC_SECRET
         - name: ROOT_PASSWORD
           valueFrom:
             secretKeyRef:
