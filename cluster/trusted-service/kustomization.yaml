@@ -48,3 +48,62 @@ patches:
         value:
           name: S3_PERSISTENT_BUCKET
           value: safy-trusted-svc-app
+      - op: add
+        path: /spec/template/spec/containers/0/env/0
+        value:
+          name: MANIFEST_SEAL_KEYSTORE_PATH
+          value: /opt/safy-certificates/seal.p12
+      - op: add
+        path: /spec/template/spec/containers/0/env/0
+        value:
+          name: MANIFEST_SEAL_KEYSTORE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: safy-certificates
+              key: seal-password
+      - op: add
+        path: /spec/template/spec/containers/0/env/0
+        value:
+          name: MANIFEST_SEAL_KEYSTORE_KEY_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: safy-certificates
+              key: seal-password
+      - op: add
+        path: /spec/template/spec/containers/0/env/0
+        value:
+          name: TIMESTAMP_KEYSTORE_PATH
+          value: /opt/safy-certificates/timestamp.p12
+      - op: add
+        path: /spec/template/spec/containers/0/env/0
+        value:
+          name: TIMESTAMP_KEYSTORE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: safy-certificates
+              key: timestamp-password
+      - op: add
+        path: /spec/template/spec/containers/0/env/0
+        value:
+          name: TIMESTAMP_KEYSTORE_KEY_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: safy-certificates
+              key: timestamp-password
+      - op: add
+        path: /spec/template/spec/volumes/0
+        value:
+          name: safy-certificates
+          secret:
+            secretName: safy-certificates
+            items:
+            - key: seal.p12
+              path: seal.p12
+            - key: timestamp.p12
+              path: timestamp.p12
+      - op: add
+        path: /spec/template/spec/containers/0/volumeMounts/0
+        value:
+          name: safy-certificates
+          mountPath: "/opt/safy-certificates"
+          readOnly: true
