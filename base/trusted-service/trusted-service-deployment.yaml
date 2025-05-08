@@ -126,6 +126,16 @@ spec:
             secretKeyRef:
               name: safy-vaultsecret
               key: SMTP_START_TLS
+        - name: MAILGUN_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: safy-vaultsecret
+              key: MAILGUN_API_KEY
+        - name: MAILGUN_DOMAIN
+          valueFrom:
+            secretKeyRef:
+              name: safy-vaultsecret
+              key: MAILGUN_DOMAIN
         - name: TWILIO_ACCOUNT
           valueFrom:
             secretKeyRef:
