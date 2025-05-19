@@ -54,7 +54,7 @@ patches:
         path: /metadata/annotations/nginx.ingress.kubernetes.io~1configuration-snippet
         value: >
           rewrite ^/
-          /ejbca/publicweb/crls/search.cgi?iHash=yxP5H6OQqbvS1vYE3akRBO3YTy0
+          /ejbca/publicweb/crls/search.cgi?iHash=gH9inuHfOXvsF2MPghdJH0j4j%2Bw
           break;
 
   - target:
@@ -75,7 +75,7 @@ patches:
         path: /metadata/annotations/nginx.ingress.kubernetes.io~1configuration-snippet
         value: >
           rewrite ^/
-          /ejbca/publicweb/crls/search.cgi?iHash=DZc6/h3bunbcDH2YN9ueodWb9q8
+          /ejbca/publicweb/crls/search.cgi?iHash=j3%2BThuwWdqqSB8IO2YJ9mIihHzk
           break;
 
   - target:
@@ -96,7 +96,7 @@ patches:
         path: /metadata/annotations/nginx.ingress.kubernetes.io~1configuration-snippet
         value: >
           rewrite ^/
-          /ejbca/publicweb/webdist/certdist?cmd=iecacert&level=0&issuer=CN%3DToosign+Root+CA+G2%2CorganizationIdentifier%3DNTRCI-CI-ABJ-2020-B-00136%2CO%3DTOOSIGN+COTE+D%27IVOIRE%2CC%3DCI
+          /ejbca/publicweb/webdist/certdist?cmd=iecacert&level=0&issuer=CN%3DBNETD+Root+CA+G1+%28staging%29%2CorganizationIdentifier%3DNTRCI-CI-ABJ-01-1994-B30-180858%2CO%3DBUREAU+NATIONAL+D%27ETUDES+TECHNIQUES+ET+DE+DEVELOPPEMENT%2CC%3DCI
           break;
 
   - target:
@@ -117,5 +117,5 @@ patches:
         path: /metadata/annotations/nginx.ingress.kubernetes.io~1configuration-snippet
         value: >
           rewrite ^/
-          /ejbca/publicweb/webdist/certdist?cmd=iecacert&level=0&issuer=CN%3DToosign+Intermediate+CA+G2%2CorganizationIdentifier%3DNTRCI-CI-ABJ-2020-B-00136%2CO%3DTOOSIGN+COTE+D%27IVOIRE%2CC%3DCI
+          /ejbca/publicweb/webdist/certdist?cmd=iecacert&level=0&issuer=CN%3DBNETD+Intermediate+CA+G1+%28staging%29%2CorganizationIdentifier%3DNTRCI-CI-ABJ-01-1994-B30-180858%2CO%3DBUREAU+NATIONAL+D%27ETUDES+TECHNIQUES+ET+DE+DEVELOPPEMENT%2CC%3DCI
           break;
