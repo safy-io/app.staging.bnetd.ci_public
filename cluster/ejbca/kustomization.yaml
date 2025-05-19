@@ -28,10 +28,10 @@ patches:
     patch: |-
       - op: replace
         path: /spec/rules/0/host
-        value: o.pki.staging.bnetd.ci
+        value: o-pki.staging.bnetd.ci
       - op: replace
         path: /spec/tls/0/hosts/0
-        value: o.pki.staging.bnetd.ci
+        value: o-pki.staging.bnetd.ci
       - op: replace
         path: /spec/rules/0/http/paths/0/path
         value: /bnetd-intermediate-ca-g1
@@ -43,10 +43,10 @@ patches:
     patch: |-
       - op: replace
         path: /spec/rules/0/host
-        value: c.pki.staging.bnetd.ci
+        value: c-pki.staging.bnetd.ci
       - op: replace
         path: /spec/tls/0/hosts/0
-        value: c.pki.staging.bnetd.ci
+        value: c-pki.staging.bnetd.ci
       - op: replace
         path: /spec/rules/0/http/paths/0/path
         value: /bnetd-root-ca-g1.crl
@@ -64,10 +64,10 @@ patches:
     patch: |-
       - op: replace
         path: /spec/rules/0/host
-        value: c.pki.staging.bnetd.ci
+        value: c-pki.staging.bnetd.ci
       - op: replace
         path: /spec/tls/0/hosts/0
-        value: c.pki.staging.bnetd.ci
+        value: c-pki.staging.bnetd.ci
       - op: replace
         path: /spec/rules/0/http/paths/0/path
         value: /bnetd-intermediate-ca-g1.crl
@@ -85,10 +85,10 @@ patches:
     patch: |-
       - op: replace
         path: /spec/rules/0/host
-        value: i.pki.staging.bnetd.ci
+        value: i-pki.staging.bnetd.ci
       - op: replace
         path: /spec/tls/0/hosts/0
-        value: i.pki.staging.bnetd.ci
+        value: i-pki.staging.bnetd.ci
       - op: replace
         path: /spec/rules/0/http/paths/0/path
         value: /bnetd-root-ca-g1.cer
@@ -106,10 +106,10 @@ patches:
     patch: |-
       - op: replace
         path: /spec/rules/0/host
-        value: i.pki.staging.bnetd.ci
+        value: i-pki.staging.bnetd.ci
       - op: replace
         path: /spec/tls/0/hosts/0
-        value: i.pki.staging.bnetd.ci
+        value: i-pki.staging.bnetd.ci
       - op: replace
         path: /spec/rules/0/http/paths/0/path
         value: /bnetd-intermediate-ca-g1.cer
