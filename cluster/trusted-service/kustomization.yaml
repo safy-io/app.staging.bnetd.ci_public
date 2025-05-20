@@ -37,7 +37,7 @@ patches:
     patch: |-
       - op: replace
         path: /spec/template/spec/containers/0/image
-        value: ghcr.io/safy-io/safy/safy-trusted-service:staging
+        value: ghcr.io/safy-io/safy/safy-trusted-service:1.4.0-RC2
       - op: add
         path: /spec/template/spec/containers/0/env/0
         value:
