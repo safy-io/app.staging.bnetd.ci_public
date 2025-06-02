@@ -25,7 +25,7 @@ patches:
     patch: |-
       - op: replace
         path: /spec/template/spec/containers/0/image
-        value: ghcr.io/safy-io/safy/safy-document-service:1.4.0-RC3
+        value: ghcr.io/safy-io/safy/safy-document-service:1.4.0-RC4
       - op: add
         path: /spec/template/spec/containers/0/env/0
         value:
