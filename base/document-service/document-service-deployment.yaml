@@ -82,16 +82,16 @@ spec:
             port: http
 
       - name: clamav
-        image: clamav/clamav:1.2
+        image: clamav/clamav:1.4
         imagePullPolicy: Always
 
         resources:
           requests:
             cpu: 50m
-            memory: 512Mi
+            memory: 1Gi
           limits:
             cpu: 500m
-            memory: 2Gi
+            memory: 4Gi
 
         ports:
         - name: tcp
